@@ -1,0 +1,7 @@
+# Windows and macOS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# release zips built for CurseForge
+*.zip

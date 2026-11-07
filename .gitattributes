@@ -1,0 +1,7 @@
+# consistent line endings in the repository; images are binary
+* text=auto
+*.png binary
+
+# leave git's own files out of release zips (git archive)
+.gitignore export-ignore
+.gitattributes export-ignore
