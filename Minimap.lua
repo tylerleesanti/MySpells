@@ -29,9 +29,9 @@ end
 
 local function showTooltip(self)
   GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-  GameTooltip:AddLine("MySpells")
-  GameTooltip:AddLine("Left-click: show / hide the window", 1, 1, 1)
-  GameTooltip:AddLine("Right-click: settings", 1, 1, 1)
+  GameTooltip:AddLine("MySpells", 1, 0.82, 0)
+  GameTooltip:AddLine("Click to toggle the MySpells window", 1, 1, 1)
+  GameTooltip:AddLine("Right-click: open settings", 1, 1, 1)
   GameTooltip:AddLine("Drag: move this button", 0.7, 0.7, 0.7)
   GameTooltip:Show()
 end
