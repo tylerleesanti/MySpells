@@ -27,10 +27,10 @@ local DEFAULTS = {
     height = 14,
     spacing = 1,
   },
-  -- minimap button (Minimap.lua): angle in degrees around the minimap (225 = bottom left)
+  -- minimap button (Minimap.lua, LibDBIcon): position in degrees around the minimap (225 = bottom left)
   minimap = {
     show = true,
-    angle = 225,
+    minimapPos = 225,
   },
   -- report window (Report.lua); falls back to Raid/Party/Say when Guild isn't available
   report = {

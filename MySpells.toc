@@ -2,10 +2,15 @@
 ## Title: MySpells
 ## Notes: A Details-style window showing your damage, healing and damage prevented per spell, from the game's built-in damage meter. /myspells
 ## Author: Tyler
-## Version: 1.9.0
+## Version: 1.9.1
 ## IconTexture: Interface\Icons\INV_Misc_Book_09
 ## SavedVariables: MySpellsDB
 ## OptionalDeps: Details, SharedMedia, LibSharedMedia-3.0
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
 MySpells.lua
 Options.lua
