@@ -2,6 +2,7 @@
 * text=auto
 *.png binary
 
-# leave git's own files out of release zips (git archive)
+# leave git's own files and the GitHub readme out of release zips (git archive)
 .gitignore export-ignore
 .gitattributes export-ignore
+README.md export-ignore
