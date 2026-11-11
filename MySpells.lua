@@ -421,7 +421,7 @@ local function getMySpells()
     for _, s in ipairs(list) do
       if not canUse(s.totalAmount) then readable = false break end
     end
-    local extra = readable and ns.estimateReductions(getSource(getEnum("DamageMeterType", "DamageTaken", 7)))
+    local extra = readable and ns.estimateReductions(getSource(getEnum("DamageMeterType", "DamageTaken", 7)), db.segment)
     if extra then
       total = isNil(total) and 0 or total
       maxAmount = canUse(maxAmount) and maxAmount or 0
@@ -563,7 +563,7 @@ local function rowTooltip(row)
   if spell.note then
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(spell.note, 0.7, 0.7, 0.7, true)
-    GameTooltip:AddLine("Worked out from the damage you took this fight, assuming it was up the whole time.", 0.5, 0.5, 0.5, true)
+    GameTooltip:AddLine("Worked out from the damage you took this fight and how long it was up.", 0.5, 0.5, 0.5, true)
   end
   GameTooltip:Show()
 end
@@ -1225,6 +1225,8 @@ SlashCmdList.MYSPELLS = function(msg)
     ns.toggleWindow()
   elseif cmd == "minimap" then
     if ns.toggleMinimapButton then ns.toggleMinimapButton() end
+  elseif cmd == "reductions" then
+    if ns.printReductions then ns.printReductions() end
   elseif cmd == "current" then
     ns.setSegment("current") say("showing the current fight.")
   elseif cmd == "overall" then
@@ -1259,6 +1261,7 @@ SlashCmdList.MYSPELLS = function(msg)
     print("  /myspells lock - lock or unlock the window (hides the resize grip)")
     print("  /myspells reset - reset the window size and position")
     print("  /myspells minimap - show or hide the minimap button")
+    print("  /myspells reductions - list the damage reductions MySpells sees for your class")
   end
 end
 

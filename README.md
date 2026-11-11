@@ -24,7 +24,12 @@ Switch with the sword icon on the title bar, or right-click anywhere on the wind
 
 - **Damage Done**: damage per ability, pets included.
 - **Healing Done**: effective healing per spell, on yourself and on others. Overhealing is not counted.
-- **Damage Prevented**: how much damage each of your shields absorbed, plus an estimate for always-on reductions (Defensive Stance, Shadowform, Soul Link, Master Demonologist with your Voidwalker), worked out from the damage you took once the fight ends.
+- **Damage Prevented**: how much damage each of your shields absorbed, plus an estimate for your percent damage reductions, worked out from the damage you took and how long each one was up:
+  - Warrior: Defensive Stance
+  - Paladin: Improved Righteous Fury, Iron Creed
+  - Priest: Shadowform, Spell Warding
+  - Shaman: Elemental Warding
+  - Warlock: Soul Link, Molten Skin, Master Demonologist (Voidwalker or Felhunter)
 
 ### Every fight, not just the last one
 The page icon opens a list of your recent fights, named by the game (usually the enemy or encounter), each with its duration. Pick **Current fight**, **Overall**, or any past fight. Right-click the icon to step through them.
@@ -69,6 +74,7 @@ One click clears all fight data, the same as Details' reset button.
 | `/myspells lock` | Lock or unlock the window |
 | `/myspells reset` | Reset the window's size and position |
 | `/myspells minimap` | Show or hide the minimap button |
+| `/myspells reductions` | List the damage reductions MySpells sees for your class |
 
 ---
 
@@ -86,3 +92,9 @@ One click clears all fight data, the same as Details' reset button.
 - **During combat the game hides some numbers from addons.** Bars and totals still update live, but percentages may only fill in, and abilities may only sort biggest-first, once the fight ends. Reports wait until after combat for the same reason.
 - **The damage meter is shared with Details**, so the reset button clears Details' data too (and vice versa).
 - **The game decides how many past fights it keeps.** A past fight disappears from the list once the game drops it.
+
+---
+
+## Credits
+
+Talent and spell values for the damage reduction estimates come from [Talents Forever](https://talentsforever.com) (CC BY 4.0).

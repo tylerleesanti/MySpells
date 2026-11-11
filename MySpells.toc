@@ -2,7 +2,7 @@
 ## Title: MySpells
 ## Notes: A Details-style window showing your damage, healing and damage prevented per spell, from the game's built-in damage meter. /myspells
 ## Author: Tyler
-## Version: 1.10.0
+## Version: 1.11.0
 ## IconTexture: Interface\Icons\INV_Misc_Book_09
 ## SavedVariables: MySpellsDB
 ## OptionalDeps: Details, SharedMedia, LibSharedMedia-3.0
