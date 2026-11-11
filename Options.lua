@@ -424,6 +424,8 @@ local function buildBarsPage()
   checkbox(p, y, "Right-click window to change mode", TEXT, "rightClickModes")
   y = y - ROW
   checkbox(p, y, "Show minimap button", MINIMAP, "show")
+  y = y - ROW
+  checkbox(p, y, "Estimate passive reductions (Damage Prevented)", TEXT, "estimateReductions")
   y = y - ROW - 4
 
   y = section(p, y, "Bar Text")

@@ -64,6 +64,7 @@ local DEFAULTS = {
     titleBgColor = { 0.047, 0.047, 0.051, 0.957 }, -- r, g, b, opacity
     windowBgColor = { 0.243, 0.235, 0.259, 0.456 }, -- window body: r, g, b, opacity
     rightClickModes = true, -- right-click the window to open the mode menu (like Details)
+    estimateReductions = true, -- Damage Prevented: estimated rows for passive reductions (Reductions.lua)
     titleHeight = 17, -- title bar thickness in pixels
     titleIconSize = 14, -- segment, report, gear icons and the close "x"
     titleIconSpacing = 0, -- pixels between the title bar icons
@@ -380,12 +381,11 @@ function ns.titleBarColor()
   return c[1], c[2], c[3], c[4] or 1
 end
 
-local function getMySpells()
+-- your entry in the game's damage meter for one meter type, for the fight the window shows
+local function getSource(meterType)
   if not (C_DamageMeter and C_DamageMeter.GetCombatSessionSourceFromType) then
     return nil, "The game's damage meter is not available."
   end
-  local mode = ns.currentMode()
-  local meterType = getEnum("DamageMeterType", mode.meter, mode.meterFallback)
   local guid = UnitGUID("player")
   local ok, source
   local seg = db.segment
@@ -400,12 +400,39 @@ local function getMySpells()
                                          or getEnum("DamageMeterSessionType", "Current", 1)
     ok, source = pcall(C_DamageMeter.GetCombatSessionSourceFromType, sessionType, meterType, guid)
   end
-  if not ok or not source then return nil end
+  if not ok then return nil end
+  return source
+end
+
+local function getMySpells()
+  local mode = ns.currentMode()
+  local source, err = getSource(getEnum("DamageMeterType", mode.meter, mode.meterFallback))
+  if err then return nil, err end
 
   local list = {}
-  for i, spell in ipairs(source.combatSpells or {}) do
+  for i, spell in ipairs(source and source.combatSpells or {}) do
     list[i] = spell
   end
+  local total, maxAmount = source and source.totalAmount, source and source.maxAmount
+
+  -- Damage Prevented: add the estimated passive reductions (Reductions.lua), once the numbers are readable
+  if mode.key == "absorbs" and db.text.estimateReductions and ns.estimateReductions then
+    local readable = isNil(total) or canUse(total)
+    for _, s in ipairs(list) do
+      if not canUse(s.totalAmount) then readable = false break end
+    end
+    local extra = readable and ns.estimateReductions(getSource(getEnum("DamageMeterType", "DamageTaken", 7)))
+    if extra then
+      total = isNil(total) and 0 or total
+      maxAmount = canUse(maxAmount) and maxAmount or 0
+      for _, row in ipairs(extra) do
+        list[#list + 1] = row
+        total = total + row.totalAmount
+        if row.totalAmount > maxAmount then maxAmount = row.totalAmount end
+      end
+    end
+  end
+  if not source and #list == 0 then return nil end
 
   -- biggest first, when the numbers are readable (otherwise keep the game's order)
   local sortable = true
@@ -416,7 +443,7 @@ local function getMySpells()
     table.sort(list, function(a, b) return a.totalAmount > b.totalAmount end)
   end
 
-  return list, nil, source.totalAmount, source.maxAmount
+  return list, nil, total, maxAmount
 end
 
 ---------------------------------------------------------------------------
@@ -532,6 +559,11 @@ local function rowTooltip(row)
   end
   if not isNil(row.pct) then
     try(GameTooltip.AddDoubleLine, GameTooltip, "Share", row.pct, 1, 0.82, 0, 1, 1, 1)
+  end
+  if spell.note then
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(spell.note, 0.7, 0.7, 0.7, true)
+    GameTooltip:AddLine("Worked out from the damage you took this fight, assuming it was up the whole time.", 0.5, 0.5, 0.5, true)
   end
   GameTooltip:Show()
 end
@@ -665,6 +697,7 @@ local function refresh()
       if canUse(pet) and pet ~= "" then
         try(function() name = name .. " |cffccbbbb(" .. pet .. ")|r" end)
       end
+      if spell.estimated then name = name .. " |cff999999(est.)|r" end
       if db.text.showNumber then
         try(function() name = i .. ". " .. name end)
       end

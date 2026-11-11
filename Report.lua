@@ -157,6 +157,7 @@ local function buildLines()
     if not ns.isSecret(pet) and type(pet) == "string" and pet ~= "" then
       name = name .. " (" .. pet:gsub(" <.*", "") .. ")"
     end
+    if s.estimated then name = name .. " (est.)" end
     local value = s.totalAmount > 10000 and toK(s.totalAmount) or string.format("%.0f", s.totalAmount)
     local pct = string.format("%.1f%%", total > 0 and s.totalAmount / total * 100 or 0)
     rows[i] = { index = i, name = i .. ". " .. name, value = value .. " (" .. pct .. ")" }

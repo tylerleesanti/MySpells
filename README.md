@@ -24,7 +24,7 @@ Switch with the sword icon on the title bar, or right-click anywhere on the wind
 
 - **Damage Done**: damage per ability, pets included.
 - **Healing Done**: effective healing per spell, on yourself and on others. Overhealing is not counted.
-- **Damage Prevented**: how much damage each of your shields absorbed.
+- **Damage Prevented**: how much damage each of your shields absorbed, plus an estimate for always-on reductions (Defensive Stance, Shadowform, Soul Link, Master Demonologist with your Voidwalker), worked out from the damage you took once the fight ends.
 
 ### Every fight, not just the last one
 The page icon opens a list of your recent fights, named by the game (usually the enemy or encounter), each with its duration. Pick **Current fight**, **Overall**, or any past fight. Right-click the icon to step through them.
